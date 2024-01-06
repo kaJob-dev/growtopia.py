@@ -276,7 +276,8 @@ class GameUpdatePacket(Packet):
 		if flag_val != 0:
 			for flag in GameUpdatePacketFlags:
 				if flag_val & flag:
-					update_packet.flags.append(flag)
+					if flag not in update_packet.flags:
+						update_packet.flags.append(flag)
 
 		update_packet.float = struct.unpack("f", data[20:24])[0]
 		update_packet.int = int.from_bytes(data[24:28], "little", signed=True)
