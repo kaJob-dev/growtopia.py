@@ -247,7 +247,9 @@ class Player(PlayerAvatar, PlayerNet):
         str:
                 The player name.
         """
-        return self.login_info.requestedName if self.guest else self.login_info.tankIDName
+        name = self.login_info.requestedName if self.guest else self.login_info.tankIDName
+
+        return name
 
     def _get_skin(self) -> int:
         """
@@ -285,7 +287,7 @@ class Player(PlayerAvatar, PlayerNet):
         packet = GameUpdatePacket(
             update_type=GameUpdatePacketType.CALL_FUNCTION,
             net_id=self.net_id,
-            variant_list=VariantList("OnNameChanged", name),
+            variant_list=VariantList("OnNameChanged", name + f"`w (`5{self.net_id}`w)"),
         )
 
         self.send(packet)

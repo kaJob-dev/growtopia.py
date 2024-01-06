@@ -50,10 +50,12 @@ class EventID(StrEnum):
     OnSuperMain = "on_super_main"
     OnSendToServer = "on_send_to_server"
     OnConsoleMessage = "on_console_message"
+    OnStartTrade = "on_start_trade"
     OnTradeStatus = "on_trade_status"
     OnDialogRequest = "on_dialog_request"
     OnRequestWorldSelectMenu = "on_request_world_select_menu"
     OnForceTradeEnd = "on_force_trade_end"
+    OnTextOverlay = "on_text_overlay"
 
     # Update events
     ON_STATE_UPDATE = "on_state_update"

@@ -1,4 +1,4 @@
-__all__ = ("WorldObject",)
+__all__ = ["WorldObject"]
 
 import struct
 

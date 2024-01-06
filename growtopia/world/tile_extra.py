@@ -1,4 +1,4 @@
-__all__ = ("TileExtra",)
+__all__ = ["TileExtra"]
 
 from .enums import TileExtraDataType
 

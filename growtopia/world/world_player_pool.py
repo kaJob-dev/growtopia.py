@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ("WorldPlayerPool",)
+__all__ = ["WorldPlayerPool"]
 
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Callable

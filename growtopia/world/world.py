@@ -1,4 +1,4 @@
-__all__ = ("World",)
+__all__ = ["World"]
 
 from typing import TYPE_CHECKING, Callable, Optional, Union
 

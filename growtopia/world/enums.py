@@ -1,4 +1,4 @@
-__all__ = ("TileExtraDataType",)
+__all__ = ["TileExtraDataType"]
 
 from enum import IntEnum
 

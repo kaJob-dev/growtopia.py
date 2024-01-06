@@ -1,4 +1,4 @@
-__all__ = ("WorldTilePool",)
+__all__ = ["WorldTilePool"]
 
 from ..item import Item
 from .tile import Tile

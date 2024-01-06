@@ -4,7 +4,6 @@ __all__ = ["WorldGenerator"]
 
 from ..item import Item
 from ..obj_holder import ObjHolder
-from .tile import Tile
 from .world import World
 
 

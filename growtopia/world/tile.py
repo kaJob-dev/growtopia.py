@@ -1,4 +1,4 @@
-__all__ = ("Tile",)
+__all__ = ["Tile"]
 
 import asyncio
 
@@ -191,7 +191,7 @@ class Tile(TileExtra):
     def update_packet(self) -> GameUpdatePacket:
         return GameUpdatePacket(
             update_type=GameUpdatePacketType.SEND_TILE_UPDATE_DATA,
-            flags=GameUpdatePacketFlags.EXTRA_DATA,
+            flags=[GameUpdatePacketFlags.EXTRA_DATA],
             int_x=self.pos[0],
             int_y=self.pos[1],
             extra_data=self.serialise(),

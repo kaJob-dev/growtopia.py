@@ -334,7 +334,7 @@ class PlayerNet(ABC):
         return self.send(
             GameUpdatePacket(
                 update_type=GameUpdatePacketType.SEND_MAP_DATA,
-                flags=GameUpdatePacketFlags.EXTRA_DATA,
+                flags=[GameUpdatePacketFlags.EXTRA_DATA],
                 extra_data=world.serialise(game_version=float(self.login_info.game_version)),
             )
         )
@@ -351,7 +351,7 @@ class PlayerNet(ABC):
         return self.send(
             GameUpdatePacket(
                 update_type=GameUpdatePacketType.SEND_INVENTORY_STATE,
-                flags=GameUpdatePacketFlags.EXTRA_DATA,
+                flags=[GameUpdatePacketFlags.EXTRA_DATA],
                 extra_data=inventory.serialise(),
             )
         )
