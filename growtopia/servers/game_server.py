@@ -123,4 +123,7 @@ class GameServer(Server, ServerWorldPool):
             elif event == EventID.ON_ITEM_ACTIVATE_REQUEST:
                 context.item = ObjHolder.items_data.get_item(context.packet.int)
 
+            elif event == EventID.ON_WRENCH:
+                context.target_net_id = context.packet.arguments["netid"]
+
         return await self.dispatch_event(event, context)

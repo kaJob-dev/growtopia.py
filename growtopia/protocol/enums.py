@@ -3,6 +3,7 @@ __all__ = (
     "VariantType",
     "GameUpdatePacketFlags",
     "GameUpdatePacketType",
+    "PlayerEffectFlag",
 )
 
 from enum import IntEnum
@@ -110,6 +111,49 @@ class GameUpdatePacketType(IntEnum):
     ACTIVE_ARROW_TO_ITEM = 37
     SELECT_TILE_INDEX = 38
     SEND_PLAYER_TRIBUTE_DATA = 39
+
+    @classmethod
+    def _missing_(cls, _):
+        return cls.UNKNOWN
+
+
+class PlayerEffectFlag(IntEnum):
+    """
+    An integer enumeration of all player effect flags.
+    """
+
+    NOCLIP = 0
+    DOUBLE_JUMP = 1
+    INVISIBLE = 2
+    NO_HAND = 3
+    NO_EYE = 4
+    NO_BODY = 5
+    DEVIL_HORNS = 6
+    GOLDEN_HALO = 7
+    # ???????? = 8
+    FIRE_PROOF = 9
+    SPIKE_PROOF = 10
+    FROZEN = 11
+    CURSED = 12
+    DUCT_TAPE = 13
+    CIGAR = 14
+    SHINING = 15
+    ZOMBIE = 16
+    RED_BODY = 17
+    HAUNTED_SHADOWS = 18
+    GEIGER_RADIATION = 19
+    SPOTLIGHT = 20
+    YELLOW_BODY = 21
+    PINEAPPLE = 22
+    FLYING_PINEAPPLE = 23
+    SUPPORTER_NAME = 24
+    SUPPER_PINEAPPLE = 25
+    CIRCLE_BUBBLE = 26
+    FLOODED = 27
+    NEON_GUM_FACE_PINK = 28
+    NEON_GUM_FACE = 29
+    NEON_GUM_FACE_YELLOW = 30
+    NEON_GUM_FACE_GREEN = 31
 
     @classmethod
     def _missing_(cls, _):

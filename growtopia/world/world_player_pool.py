@@ -5,7 +5,12 @@ __all__ = ["WorldPlayerPool"]
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Callable
 
-from ..protocol import GameUpdatePacket, GameUpdatePacketType
+from ..protocol import (
+    GameUpdatePacket,
+    GameUpdatePacketType,
+    PlayerEffectFlag,
+    VariantList,
+)
 
 if TYPE_CHECKING:
     from ..player import Player
@@ -18,7 +23,7 @@ class WorldPlayerPool(ABC):
     Attributes
     ----------
     players: dict[int, Player]
-        The players in the world.
+            The players in the world.
     """
 
     def __init__(self) -> None:
@@ -46,7 +51,7 @@ class WorldPlayerPool(ABC):
         Returns
         -------
         dict[int, Player]:
-            The players in the world.
+                The players in the world.
         """
         return self.__players
 
@@ -58,7 +63,7 @@ class WorldPlayerPool(ABC):
         Parameters
         ----------
         value: dict[int, Player]
-            The players to set.
+                The players to set.
         """
         self.__players = value
 
@@ -69,12 +74,12 @@ class WorldPlayerPool(ABC):
         Parameters
         ----------
         player: Player
-            The player to add to the world.
+                The player to add to the world.
 
         Returns
         -------
         bool:
-            True if the player was added, False otherwise.
+                True if the player was added, False otherwise.
         """
         if player.net_id in self.players:
             return False
@@ -96,10 +101,46 @@ class WorldPlayerPool(ABC):
         self.next_net_id += 1
         self.players[player.net_id] = player
 
-        # update clothing
-        packet = GameUpdatePacket(update_type=GameUpdatePacketType.SET_CHARACTER_STATE, net_id=player.net_id)
+        # Set Character State
+        packet: GameUpdatePacket = GameUpdatePacket(
+            update_type=GameUpdatePacketType.SET_CHARACTER_STATE,
+            net_id=player.net_id,
+            object_type=23,  # punch id,
+            int_=2,  # effect flags (double jump)
+            count1=128,  # build range
+            count2=128,  # punch range
+            target_net_id=24831,  # pupil color
+            float_=125.0,  # water speed
+            vec_x=1200.0,  # accel
+            vec_y=200.0,  # punch strength
+            velo_x=310.0,  # speed out
+            velo_y=1000.0,  # gravity out
+            int_x=-1,  # hair color
+            int_y=-1,  # eye color
+        )
 
         player.send(packet)
+
+        # Update character clothing
+        packet = GameUpdatePacket(
+            update_type=GameUpdatePacketType.CALL_FUNCTION,
+            net_id=player.net_id,
+            variant_list=VariantList("OnSetClothing", *player.get_clothing()),
+        )
+
+        # Broadcast packet to world
+        self.lambda_broadcast(lambda p: p.send(packet))
+
+        for _, p in self.players.items():
+            # Current player clothing packet
+            packet = GameUpdatePacket(
+                update_type=GameUpdatePacketType.CALL_FUNCTION,
+                net_id=p.net_id,
+                variant_list=VariantList("OnSetClothing", *p.get_clothing()),
+            )
+
+            # Send packet to player
+            player.send(packet)
 
         return True
 
@@ -110,12 +151,12 @@ class WorldPlayerPool(ABC):
         Parameters
         ----------
         net_id: int
-            The net id of the player to get.
+                The net id of the player to get.
 
         Returns
         -------
         Player:
-            The player with the net id.
+                The player with the net id.
         """
         return self.players.get(net_id, None)
 
@@ -126,12 +167,12 @@ class WorldPlayerPool(ABC):
         Parameters
         ----------
         player: Player
-            The player to remove from the world.
+                The player to remove from the world.
 
         Returns
         -------
         bool:
-            True if the player was removed, False otherwise.
+                True if the player was removed, False otherwise.
         """
         if player.net_id not in self.players:
             return False

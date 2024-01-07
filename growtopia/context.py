@@ -71,6 +71,8 @@ class ServerContext(Context):
         self.item: "Item" | None = None
         self.player_tribute: "PlayerTribute" | None = None
 
+        self.target_net_id: int | None = None
+
     def reply(self, packet: "StrPacket" | "GameUpdatePacket" | "HelloPacket") -> bool:
         """
         Replies to the player with a packet.

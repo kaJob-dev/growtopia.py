@@ -290,7 +290,7 @@ class Player(PlayerAvatar, PlayerNet):
             variant_list=VariantList("OnNameChanged", name + f"`w (`5{self.net_id}`w)"),
         )
 
-        self.send(packet)
+        self.world.broadcast(packet)
 
     def _update_country_flag(self, flag: str) -> None:
         """
@@ -307,7 +307,7 @@ class Player(PlayerAvatar, PlayerNet):
             variant_list=VariantList("OnCountryState", flag),
         )
 
-        self.send(packet)
+        self.world.broadcast(packet)
 
     async def add_title(self, title: NameTitle) -> None:
         """
