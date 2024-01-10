@@ -288,7 +288,7 @@ class Player(PlayerAvatar, PlayerNet):
             self._get_skin(),
             (self.ances, self.d2, self.d3),
         )
-    
+
     def get_character_state(self) -> dict[str, float | int]:
         """
         Returns the player's character state data in the correct format.
@@ -306,7 +306,7 @@ class Player(PlayerAvatar, PlayerNet):
             "velo_x": self.speed,
             "velo_y": self.gravity,
             "int_x": self.hair_color,
-            "int_y": self.eye_color
+            "int_y": self.eye_color,
         }
 
     def _update_name(self, name: str) -> None:

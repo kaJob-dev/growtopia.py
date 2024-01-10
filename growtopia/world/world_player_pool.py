@@ -7,8 +7,8 @@ from typing import TYPE_CHECKING, Callable
 
 from ..protocol import (
     GameUpdatePacket,
-    GameUpdatePacketType,
     GameUpdatePacketFlags,
+    GameUpdatePacketType,
     PlayerEffectFlag,
     VariantList,
 )
