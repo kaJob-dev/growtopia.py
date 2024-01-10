@@ -43,13 +43,27 @@ class Player(PlayerAvatar, PlayerNet):
         self.d2: int = 0
         self.d3: int = 0
 
-        self.color: tuple[int, int, int] = (100, 80, 194)
-        self.opacity: int = 255
-
         self.titles: list[NameTitle] = []
         self.name_color: str = ""
 
         self.punch_id: int = 0
+
+        self.build_range: int = 128
+        self.punch_range: int = 128
+
+        self.water_speed: float = 125.0
+        self.accel: float = 1200.0
+        self.punch_strength: float = 200.0
+        self.speed: float = 310.0
+        self.gravity: float = 1000.0
+
+        self.effect_flags: int = 1
+
+        self.color: tuple[int, int, int] = (100, 80, 194)
+        self.opacity: int = 255
+        self.pupil_color: int = 24831
+        self.hair_color: int = -1
+        self.eye_color: int = -1
 
         self._login_info: PlayerLoginInfo = PlayerLoginInfo()
         self._peer: enet.Peer = peer
@@ -274,6 +288,26 @@ class Player(PlayerAvatar, PlayerNet):
             self._get_skin(),
             (self.ances, self.d2, self.d3),
         )
+    
+    def get_character_state(self) -> dict[str, float | int]:
+        """
+        Returns the player's character state data in the correct format.
+        """
+
+        return {
+            "object_type": self.punch_id,
+            "int_": 1 << self.effect_flags,
+            "count1": self.build_range,
+            "count2": self.punch_range,
+            "target_net_id": self.pupil_color,
+            "float_": self.water_speed,
+            "vec_x": self.accel,
+            "vec_y": self.punch_strength,
+            "velo_x": self.speed,
+            "velo_y": self.gravity,
+            "int_x": self.hair_color,
+            "int_y": self.eye_color
+        }
 
     def _update_name(self, name: str) -> None:
         """

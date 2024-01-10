@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Callable
 from ..protocol import (
     GameUpdatePacket,
     GameUpdatePacketType,
+    GameUpdatePacketFlags,
     PlayerEffectFlag,
     VariantList,
 )
@@ -105,18 +106,10 @@ class WorldPlayerPool(ABC):
         packet: GameUpdatePacket = GameUpdatePacket(
             update_type=GameUpdatePacketType.SET_CHARACTER_STATE,
             net_id=player.net_id,
-            object_type=23,  # punch id,
-            int_=2,  # effect flags (double jump)
-            count1=128,  # build range
-            count2=128,  # punch range
-            target_net_id=24831,  # pupil color
-            float_=125.0,  # water speed
-            vec_x=1200.0,  # accel
-            vec_y=200.0,  # punch strength
-            velo_x=310.0,  # speed out
-            velo_y=1000.0,  # gravity out
-            int_x=-1,  # hair color
-            int_y=-1,  # eye color
+            **player.get_character_state(),
+            extra_data=b"\x00",
+            extra_data_size=1,
+            flags=[GameUpdatePacketFlags.EXTRA_DATA],
         )
 
         player.send(packet)
